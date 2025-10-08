@@ -11,4 +11,5 @@ class Pilha : private ListaCompleta {
     void Empilha(void *);
     void *Desempilha();
     int Tamanho() const;
+    void *Topo();
 };
