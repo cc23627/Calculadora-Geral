@@ -34,7 +34,8 @@ void infixaParaPosfixa(const char* expressao, char* saida){
     while(expressao[i] != '\0'){
         char caracter = expressao[i];
 
-        if(isdigit(caracter)){ // número
+        // número
+        if(isdigit(caracter)){
             int j = 0;
             while(isdigit(expressao[i]) || expressao[i] == '.') 
                 temporario[j++] = expressao[i++];
@@ -45,23 +46,30 @@ void infixaParaPosfixa(const char* expressao, char* saida){
                 saida[indiceSaida++] = temporario[k];
             saida[indiceSaida++] = ' ';
         }
-        else if(caracter == '('){ 
+        // abre parêntese
+        else if(caracter == '('){
             char* ptr = new char(caracter);
             pilha.Empilha(ptr);
         }
-        else if(caracter == ')'){ 
+        // fecha parêntese
+        else if(caracter == ')'){
+            // desempilha até encontrar '('
             while(pilha.Tamanho() != 0 && *(char*)pilha.Topo() != '('){
                 char* ptr = (char*)pilha.Desempilha();
                 saida[indiceSaida++] = *ptr;
                 saida[indiceSaida++] = ' ';
                 delete ptr;
             }
-            if(pilha.Tamanho() == 0) 
+
+            if(pilha.Tamanho() == 0)
                 throw std::runtime_error("Parênteses desbalanceados");
+
+            // remove '(' da pilha
             char* ptr = (char*)pilha.Desempilha();
             delete ptr;
         }
-        else if(ehOperador(caracter)){ 
+        // operador
+        else if(ehOperador(caracter)){
             while(pilha.Tamanho() != 0 && ehOperador(*(char*)pilha.Topo()) &&
                   precedencia(*(char*)pilha.Topo()) >= precedencia(caracter)){
                 char* ptr = (char*)pilha.Desempilha();
@@ -72,16 +80,18 @@ void infixaParaPosfixa(const char* expressao, char* saida){
             char* ptr = new char(caracter);
             pilha.Empilha(ptr);
         }
-        else {
+        else{
             throw std::runtime_error("Símbolo inválido");
         }
 
         i++;
     }
 
+    // desempilha o que sobrou
     while(pilha.Tamanho() > 0){
         if(*(char*)pilha.Topo() == '(')
             throw std::runtime_error("Parênteses desbalanceados");
+
         char* ptr = (char*)pilha.Desempilha();
         saida[indiceSaida++] = *ptr;
         saida[indiceSaida++] = ' ';
@@ -90,6 +100,7 @@ void infixaParaPosfixa(const char* expressao, char* saida){
 
     saida[indiceSaida] = '\0';
 }
+
 
 int main() {
     char expressao[100];

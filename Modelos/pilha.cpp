@@ -16,7 +16,7 @@ void *Pilha::Desempilha() {
 int Pilha::Tamanho() const { return Tam; }
 
 void *Pilha::Topo(){
-    if(Tamanho() == 0) return nullptr;
+    if(Tam == 0) return nullptr;
     void *elementoTopo = DescarteDoFinal();
     IncorporeNoFinal(elementoTopo);
     return elementoTopo;
