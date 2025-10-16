@@ -15,7 +15,7 @@ int ehBooleano(const char* s) {
 int ehNumero(const char* s) {
     int i = 0;
     int ponto = 0;
-    if(s[0]=='-' || s[0]=='+') i++; // sinal
+    if(s[0]=='-' || s[0]=='+') i++;
     for(; s[i]; i++){
         if(s[i]=='.'){
             if(ponto) return 0;

@@ -2,7 +2,7 @@
 #include <cstring>
 #include <cstdio>
 
-// Precedência baseada nas regras que você passou
+// Precedência
 int precedencia(const char* op){
     if(strcmp(op,"!") == 0) return 9;
     if(strcmp(op,"^") == 0) return 8;
@@ -18,7 +18,7 @@ int precedencia(const char* op){
 
 int associativoDireita(const char* op){
     if(strcmp(op,"!") == 0 || strcmp(op,"^") == 0) return 1;
-    return 0; // esquerda
+    return 0;
 }
 
 void infixaParaPosfixa(Token* tokens, Token* saida, int& tamanhoSaida) {
@@ -29,11 +29,11 @@ void infixaParaPosfixa(Token* tokens, Token* saida, int& tamanhoSaida) {
         Token t = tokens[i];
 
         if (t.tipo == NUMERO || t.tipo == BOOLEANO) {
-            // Números e booleanos vão direto para a saída
+
             saida[tamanhoSaida++] = t;
         }
         else if (t.tipo == OPERADOR) {
-            // Desempilha operadores da pilha de acordo com precedência
+
             while (!pilha.Vazia()) {
                 Token* topo = (Token*)pilha.Topo();
                 if (topo->tipo != OPERADOR) break;
@@ -48,7 +48,7 @@ void infixaParaPosfixa(Token* tokens, Token* saida, int& tamanhoSaida) {
                     delete x;
                 } else break;
             }
-            // Empilha o operador atual
+
             Token* p = new Token;
             *p = t;
             pilha.Empilhar(p);
